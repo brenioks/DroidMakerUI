@@ -1,0 +1,18 @@
+[gd_resource type="Theme" format=3 uid="uid://bbhpg8xwb1x1j"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g7b7a"]
+bg_color = Color(0.32941177, 0.36078432, 0.32941177, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="SystemFont" id="SystemFont_kvery"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqlwe"]
+bg_color = Color(0.646, 0.72389996, 0.76, 0.101960786)
+
+[resource]
+Button/styles/normal = SubResource("StyleBoxFlat_g7b7a")
+Label/fonts/font = SubResource("SystemFont_kvery")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_aqlwe")
