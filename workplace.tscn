@@ -81,6 +81,7 @@ icon_alignment = 1
 
 [node name="EventList" type="VBoxContainer" parent="Main/Column" unique_id=1501147549]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Main/Column/EventList" unique_id=1138494545]
@@ -136,6 +137,11 @@ script = ExtResource("5_kjeef")
 
 [node name="Event" type="VBoxContainer" parent="Main/Column/EventList/CodeGroup" unique_id=619083053]
 layout_mode = 2
+
+[node name="RestOfTheWorldGutter" parent="Main/Column/EventList" unique_id=1472342649 instance=ExtResource("4_gwg38")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
 
 [node name="RightPanel" type="PanelContainer" parent="." unique_id=698543878]
 visible = false
