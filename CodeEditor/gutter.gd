@@ -24,6 +24,10 @@ func _ready() -> void:
 
 func _on_code_node_set(new: Node):
 	numbers_label.text = ""
+	
+	if not fold_list.is_empty():
+		_show_folds()
+	
 	if not new:
 		new = get_node_or_null("../Code")
 		if not new:
@@ -35,9 +39,6 @@ func _on_code_node_set(new: Node):
 	var line_count = code_text.count("\n")+1
 	for line in range(line_count):
 		numbers_label.text += str(line+1) + "\n"
-	
-	if not fold_list.is_empty():
-		_show_folds()
 	
 	await get_tree().process_frame
 	
@@ -54,7 +55,8 @@ func _show_folds():
 		var fold_start: int = fold_list[i]
 		var fold_end: int = fold_list[i + 1]
 		folds_label.text += "\n".repeat(fold_start - 1) + "⌄"
-		folds_label.text += "\n".repeat(fold_end - fold_start) + "."
+		if fold_end > fold_start:
+			folds_label.text += "\n".repeat(fold_end - fold_start) + "."
 
 func _find_nth_occurrence(text: String, target: String, n: int) -> int:
 	var pos = -1

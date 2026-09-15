@@ -26,6 +26,7 @@ horizontal_alignment = 2
 unique_name_in_owner = true
 modulate = Color(0.82, 0.93700004, 1, 0.5411765)
 layout_mode = 2
+size_flags_horizontal = 10
 size_flags_vertical = 0
 theme = ExtResource("2_tuqt5")
 fit_content = true
