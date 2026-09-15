@@ -4,9 +4,10 @@ extends PanelContainer
 
 @export var code_node: Node:
 	set(new):
-		if Engine.is_editor_hint():
-			_on_code_node_set(new)
 		code_node = new
+@warning_ignore("unused_private_class_variable")
+@export_tool_button("Sync Gutter Sizes") var __sync_gutter_sizes = func():
+	_on_code_node_set(code_node)
 
 @onready var numbers_label = $Label
 

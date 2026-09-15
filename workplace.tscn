@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://biknltafecs1d" path="res://icons/hamburger_icon.png" id="1_n4o62"]
 [ext_resource type="Texture2D" uid="uid://dl7e7oq7fj43g" path="res://icons/assets_icon.png" id="2_2a0aw"]
 [ext_resource type="Texture2D" uid="uid://6xcht2b0cedh" path="res://icons/icon.svg" id="2_xlm1k"]
-[ext_resource type="Theme" uid="uid://x7gpo1v81u7s" path="res://resources/code_theme.tres" id="4_aqlwe"]
+[ext_resource type="Theme" uid="uid://x7gpo1v81u7s" path="res://CodeEditor/code_theme.tres" id="4_aqlwe"]
 [ext_resource type="PackedScene" uid="uid://lh34yjsrk50e" path="res://CodeEditor/gutter.tscn" id="4_gwg38"]
 [ext_resource type="Script" uid="uid://bqnnt6re1844n" path="res://CodeEditor/code_editor.gd" id="5_kjeef"]
 
@@ -85,6 +85,7 @@ theme_override_constants/separation = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Main/Column/EventList" unique_id=1138494545]
 layout_mode = 2
+theme_override_constants/separation = 8
 
 [node name="Gutter" parent="Main/Column/EventList/HBoxContainer" unique_id=561590972 instance=ExtResource("4_gwg38")]
 custom_minimum_size = Vector2(21, 0)
@@ -118,7 +119,7 @@ vsp = 0;
 name = \"test obj\";
 
 function add_numbers(a, b) {	
-	return a + b;
+	return a + b
 }
 
 function update_state() {

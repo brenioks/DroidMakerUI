@@ -1,7 +1,7 @@
 [gd_resource type="Theme" format=3 uid="uid://x7gpo1v81u7s"]
 
-[sub_resource type="SystemFont" id="SystemFont_wt32b"]
-font_names = PackedStringArray("Monospace")
+[ext_resource type="FontFile" uid="uid://d4ck0wij5wmu" path="res://resources/RobotoMono.ttf" id="1_ed5dj"]
+[ext_resource type="FontFile" uid="uid://crawn1kclmhy6" path="res://resources/RobotoMono-Italic.ttf" id="2_5n43k"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d4vwl"]
 content_margin_left = 4.0
@@ -26,8 +26,10 @@ expand_margin_bottom = 2.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ewt1l"]
 
-[sub_resource type="SystemFont" id="SystemFont_y2srt"]
-font_names = PackedStringArray("Monospace")
+[sub_resource type="FontVariation" id="FontVariation_lkaf1"]
+base_font = ExtResource("1_ed5dj")
+variation_embolden = 0.2
+variation_transform = Transform2D(1.05, 0, 0, 1, 0, 0)
 
 [resource]
 Label/colors/font_color = Color(1, 1, 1, 1)
@@ -39,8 +41,13 @@ Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
 Label/constants/shadow_outline_size = 1
 Label/font_sizes/font_size = 12
-Label/fonts/font = SubResource("SystemFont_wt32b")
+Label/fonts/font = ExtResource("1_ed5dj")
 Label/styles/focus = SubResource("StyleBoxFlat_d4vwl")
 Label/styles/normal = SubResource("StyleBoxEmpty_ewt1l")
+RichTextLabel/font_sizes/bold_font_size = 12
+RichTextLabel/font_sizes/italics_font_size = 12
+RichTextLabel/font_sizes/mono_font_size = 16
 RichTextLabel/font_sizes/normal_font_size = 12
-RichTextLabel/fonts/normal_font = SubResource("SystemFont_y2srt")
+RichTextLabel/fonts/bold_font = SubResource("FontVariation_lkaf1")
+RichTextLabel/fonts/italics_font = ExtResource("2_5n43k")
+RichTextLabel/fonts/normal_font = ExtResource("1_ed5dj")
