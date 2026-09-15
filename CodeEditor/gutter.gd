@@ -2,14 +2,16 @@
 class_name Gutter
 extends PanelContainer
 
-@export var code_node: Node:
-	set(new):
-		code_node = new
 @warning_ignore("unused_private_class_variable")
 @export_tool_button("Sync Gutter Sizes") var __sync_gutter_sizes = func():
 	_on_code_node_set(code_node)
+@export var code_node: Node:
+	set(new):
+		code_node = new
+@export var fold_list: PackedInt32Array
 
-@onready var numbers_label = $Label
+@onready var numbers_label = %Numbers
+@onready var folds_label = %Folds
 
 static var MIN_WIDTH: int = 0
 static var _instance_list: Array[Gutter]
@@ -34,6 +36,9 @@ func _on_code_node_set(new: Node):
 	for line in range(line_count):
 		numbers_label.text += str(line+1) + "\n"
 	
+	if not fold_list.is_empty():
+		_show_folds()
+	
 	await get_tree().process_frame
 	
 	Gutter.MIN_WIDTH = max(Gutter.MIN_WIDTH, size.x)
@@ -43,4 +48,19 @@ func _on_code_node_set(new: Node):
 static func _update_gutters_width():
 	for gutter in Gutter._instance_list:
 		gutter.custom_minimum_size.x = Gutter.MIN_WIDTH
+
+func _show_folds():
+	for i in range(0, fold_list.size() - 1, 2):
+		var fold_start: int = fold_list[i]
+		var fold_end: int = fold_list[i + 1]
+		folds_label.text += "\n".repeat(fold_start - 1) + "⌄"
+		folds_label.text += "\n".repeat(fold_end - fold_start) + "."
+
+func _find_nth_occurrence(text: String, target: String, n: int) -> int:
+	var pos = -1
+	for i in range(n):
+		pos = text.find(target, pos + 1)
+		if pos == -1:
+			break
+	return pos
 																											   

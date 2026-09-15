@@ -8,7 +8,22 @@
 theme_override_styles/panel = ExtResource("1_tuqt5")
 script = ExtResource("1_klnqo")
 
-[node name="Label" type="RichTextLabel" parent="." unique_id=566654518]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=88407503]
+layout_mode = 2
+
+[node name="Numbers" type="RichTextLabel" parent="HBoxContainer" unique_id=566654518]
+unique_name_in_owner = true
+modulate = Color(0.82, 0.93700004, 1, 0.5411765)
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("2_tuqt5")
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 2
+
+[node name="Folds" type="RichTextLabel" parent="HBoxContainer" unique_id=793374323]
+unique_name_in_owner = true
 modulate = Color(0.82, 0.93700004, 1, 0.5411765)
 layout_mode = 2
 size_flags_vertical = 0
