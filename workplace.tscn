@@ -79,36 +79,55 @@ icon = ExtResource("2_2a0aw")
 flat = true
 icon_alignment = 1
 
-[node name="EventList" type="VBoxContainer" parent="Main/Column" unique_id=1501147549]
+[node name="ScrollContainer" type="ScrollContainer" parent="Main/Column" unique_id=848318130]
 layout_mode = 2
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/Column/ScrollContainer" unique_id=150665967]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Gutters" type="VBoxContainer" parent="Main/Column/ScrollContainer/HBoxContainer" unique_id=1671854019]
+layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Main/Column/EventList" unique_id=1138494545]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="Gutter" parent="Main/Column/EventList/HBoxContainer" unique_id=561590972 instance=ExtResource("4_gwg38")]
-custom_minimum_size = Vector2(32, 0)
+[node name="CreateHeaderGutter" parent="Main/Column/ScrollContainer/HBoxContainer/Gutters" unique_id=561590972 instance=ExtResource("4_gwg38")]
+custom_minimum_size = Vector2(32, 17)
 layout_mode = 2
 fold_list = PackedInt32Array(0, 0)
 
-[node name="Header" type="Label" parent="Main/Column/EventList/HBoxContainer" unique_id=1385610417]
+[node name="CreateGutter" parent="Main/Column/ScrollContainer/HBoxContainer/Gutters" unique_id=650094435 node_paths=PackedStringArray("code_node") instance=ExtResource("4_gwg38")]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+code_node = NodePath("../../ScrollContainer/EventList/CreateEvent/CreateCode")
+fold_list = PackedInt32Array(8, 10, 12, 19)
+
+[node name="RestOfTheWorldGutter" parent="Main/Column/ScrollContainer/HBoxContainer/Gutters" unique_id=1472342649 instance=ExtResource("4_gwg38")]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Main/Column/ScrollContainer/HBoxContainer" unique_id=1958720745]
+layout_mode = 2
+size_flags_horizontal = 3
+vertical_scroll_mode = 0
+
+[node name="EventList" type="VBoxContainer" parent="Main/Column/ScrollContainer/HBoxContainer/ScrollContainer" unique_id=1501147549]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="CreateEvent" type="VBoxContainer" parent="Main/Column/ScrollContainer/HBoxContainer/ScrollContainer/EventList" unique_id=619083053]
+layout_mode = 2
+
+[node name="Header" type="Label" parent="Main/Column/ScrollContainer/HBoxContainer/ScrollContainer/EventList/CreateEvent" unique_id=1385610417]
 layout_mode = 2
 theme = ExtResource("4_aqlwe")
 text = "Create"
 
-[node name="CodeGroup" type="HBoxContainer" parent="Main/Column/EventList" unique_id=1993456304]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 8
-
-[node name="Gutter" parent="Main/Column/EventList/CodeGroup" unique_id=650094435 instance=ExtResource("4_gwg38")]
-custom_minimum_size = Vector2(32, 0)
-layout_mode = 2
-fold_list = PackedInt32Array(8, 10, 12, 19)
-
-[node name="Code" type="RichTextLabel" parent="Main/Column/EventList/CodeGroup" unique_id=503353715]
+[node name="CreateCode" type="RichTextLabel" parent="Main/Column/ScrollContainer/HBoxContainer/ScrollContainer/EventList/CreateEvent" unique_id=503353715]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -144,15 +163,6 @@ function update_state() {
 fit_content = true
 autowrap_mode = 0
 script = ExtResource("5_kjeef")
-
-[node name="Event" type="VBoxContainer" parent="Main/Column/EventList/CodeGroup" unique_id=619083053]
-layout_mode = 2
-
-[node name="RestOfTheWorldGutter" parent="Main/Column/EventList" unique_id=1472342649 instance=ExtResource("4_gwg38")]
-custom_minimum_size = Vector2(32, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 3
 
 [node name="RightPanel" type="PanelContainer" parent="." unique_id=698543878]
 visible = false
