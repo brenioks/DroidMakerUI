@@ -17,11 +17,11 @@ static var _instance_list: Array[Gutter]
 
 func _ready() -> void:
 	_on_code_node_set(code_node)
-		
+	Gutter._instance_list.append(self)
+
 
 func _on_code_node_set(new: Node):
 	numbers_label.text = ""
-	Gutter._instance_list.append(self)
 	if not new:
 		new = get_node_or_null("../Code")
 		if not new:
