@@ -102,7 +102,6 @@ size_flags_vertical = 3
 theme_override_constants/separation = 8
 
 [node name="Gutter" parent="Main/Column/EventList/CodeGroup" unique_id=650094435 instance=ExtResource("4_gwg38")]
-custom_minimum_size = Vector2(21, 0)
 layout_mode = 2
 
 [node name="Code" type="RichTextLabel" parent="Main/Column/EventList/CodeGroup" unique_id=503353715]
