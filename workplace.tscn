@@ -122,16 +122,24 @@ vsp = 0;
 name = \"test obj\";
 
 function add_numbers(a, b) {	
-	return a + b
+	return a + b;
 }
 
 function update_state() {
-	// 
+	// Lower bound of horizontal velocity
 	if (abs(hsp) < 0.1) {
 		hsp = 0;
 	}
 	// Cap falling speed
 	vsp = min(vsp, 50);
+	
+	// Collide horizontally
+	if (place_meeting(x + hsp, y, o_wall)) {
+		while (!place_meeting(x + hsp, y, o_wall)) {
+			x += sign(hsp);
+		}
+		hsp = 0;
+	}
 }"
 fit_content = true
 autowrap_mode = 0
