@@ -54,7 +54,13 @@ func highlight_code(source: String) -> String:
 				break
 		
 		if not matched_group.is_empty():
-			output += "[color=%s]%s[/color]" % [COLORS[matched_group], escaped_match]
+			var highlighted_word = "[color=%s]%s[/color]" % [COLORS[matched_group], escaped_match]
+			match matched_group:
+				"COMMENT":
+					highlighted_word = "[i]%s[/i]" % highlighted_word
+				"KEYWORD":
+					highlighted_word = "[b]%s[/b]" % highlighted_word
+			output += highlighted_word
 		else:
 			output += escaped_match
 			
