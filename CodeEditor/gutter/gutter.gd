@@ -32,17 +32,14 @@ func _ready() -> void:
 
 func _on_code_node_set(new: Node):
 	numbers_label.text = ""
-	
-	if not fold_list.is_empty():
-		_show_folds()
-	else:
-		_hide_folds()
+	fold_list.clear()
 	
 	if not new:
 		new = get_node_or_null("../Code")
 		if not new:
 			Gutter._update_gutters_width()
 			return
+		code_node = new
 		print("(%s) Gutter: code_node reference is null. Found neighboring" % get_parent().name)
 	
 	var code_text: String = new.text
@@ -50,20 +47,52 @@ func _on_code_node_set(new: Node):
 	for line in range(line_count):
 		numbers_label.text += str(line+1) + "\n"
 	
+	new.gutter = self
+	_detect_fold_regions(code_text)
+	
+	if not fold_list.is_empty():
+		_show_folds()
+	else:
+		_hide_folds()
+	
 	await get_tree().process_frame
 	
 	Gutter.MIN_WIDTH = max(Gutter.MIN_WIDTH, size.x)
 	print("(%s) GUTTER_WIDTH: %s" % [$"..".name, Gutter.MIN_WIDTH])
 	Gutter._update_gutters_width()
-	
-	new.gutter = self
 
 static func _update_gutters_width():
 	for gutter in Gutter._instance_list:
 		gutter.custom_minimum_size.x = Gutter.MIN_WIDTH
 
+func _detect_fold_regions(source: String):
+	var splitted_source = source.split('\n')
+	for i in range(splitted_source.size()):
+		var opening_line = splitted_source[i]
+		if not opening_line.contains("{"):
+			print("didnt find a open bracket")
+			continue
+		
+		for j in range(i, splitted_source.size()):
+			var closing_line = splitted_source[j]
+			if not closing_line.contains("}"):
+				print("didnt find a closing bracket for this opening one")
+				continue
+			var openbracket_line = i
+			var closebracket_line = j
+			
+			fold_list.append(openbracket_line + 1)
+			fold_list.append(closebracket_line + 1)
+			i += j
+			break
+	print(fold_list)
+	#print("didnt find any complete brackets")
+
 func _show_folds():
 	fold_button_list.visible = true
+	for child in fold_button_list.get_children():
+		queue_free()
+	
 	for fold in range(0, fold_list.size() - 1, 2):
 		var foldline_start: int = fold_list[fold]
 		#var foldline_end: int = fold_list[fold + 1]
@@ -100,10 +129,8 @@ func offset_fold(fold: int, offset: int):
 		return
 	
 	spacer_before.custom_minimum_size.y += offset * FONT_HEIGHT
-	print(fold_list)
 	fold_list[fold] += offset
 	fold_list[fold + 1] += offset
-	print(fold_list)
 
 
 func _on_some_fold_button_toggled(closed: bool, fold: int):
