@@ -14,12 +14,15 @@ signal fold_closed(foldline_start: int, foldline_end: int)
 @export var fold_list: PackedInt32Array
 
 @onready var numbers_label = %Numbers
-@onready var fold_button_list = %FoldButtonList
+@onready var fold_button_list: VBoxContainer = %FoldButtonList
 
 static var MIN_WIDTH: int = 0
 static var _instance_list: Array[Gutter]
 
-const foldline_button = preload("res://CodeEditor/gutter/fold_button.tscn")
+const FONT_HEIGHT: int = 17
+const foldline_button := preload("res://CodeEditor/gutter/fold_button.tscn")
+
+var line_count: int = 0
 
 
 func _ready() -> void:
@@ -43,7 +46,7 @@ func _on_code_node_set(new: Node):
 		print("(%s) Gutter: code_node reference is null. Found neighboring" % get_parent().name)
 	
 	var code_text: String = new.text
-	var line_count = code_text.count("\n")+1
+	line_count = code_text.count("\n")+1
 	for line in range(line_count):
 		numbers_label.text += str(line+1) + "\n"
 	
@@ -61,33 +64,60 @@ static func _update_gutters_width():
 
 func _show_folds():
 	fold_button_list.visible = true
-	for i in range(0, fold_list.size() - 1, 2):
-		var foldline_start: int = fold_list[i]
-		var foldline_end: int = fold_list[i + 1]
+	for fold in range(0, fold_list.size() - 1, 2):
+		var foldline_start: int = fold_list[fold]
+		#var foldline_end: int = fold_list[fold + 1]
 		
 		if foldline_start > 1:
 			var space = Control.new()
 			# After last foldline_end
-			if i > 1:
-				var last_foldline_start: int = fold_list[i - 2]
-				space.custom_minimum_size.y = 17 * (foldline_start - last_foldline_start - 1)
+			if fold > 1:
+				var last_foldline_start: int = fold_list[fold - 2]
+				space.custom_minimum_size.y = FONT_HEIGHT * (foldline_start - last_foldline_start - 1)
 			else:
-				space.custom_minimum_size.y = 17 * (foldline_start - 1)
+				space.custom_minimum_size.y = FONT_HEIGHT * (foldline_start - 1)
 			fold_button_list.add_child(space)
 		
-		var foldline_button_inst: Button = foldline_button.instantiate()
-		foldline_button_inst.toggled.connect(_on_some_fold_button_toggled.bind(foldline_start, foldline_end))
-		fold_button_list.add_child(foldline_button_inst)
+		var fold_button_inst: Button = foldline_button.instantiate()
+		fold_button_inst.name = "Fold%d" % [fold]
+		fold_button_inst.toggled.connect(_on_some_fold_button_toggled.bind(fold))
+		fold_button_list.add_child(fold_button_inst)
 
 func _hide_folds():
 	fold_button_list.visible = false
 
+func offset_fold(fold: int, offset: int):
+	if fold == 0 or fold > line_count:
+		return
+	var foldline = fold_list[fold]
+	var fold_button = fold_button_list.get_node_or_null("Fold%d" % fold)
+	if not fold_button:
+		printerr("cant offset Fold%d (l %d), button not found" % [fold, foldline])
+		return
+	var spacer_before: Control = fold_button_list.get_child(fold_button.get_index() - 1)
+	if not spacer_before:
+		printerr("cant offset Fold%d (l %d), because there's no spacer before it" % [fold, foldline])
+		return
+	
+	spacer_before.custom_minimum_size.y += offset * FONT_HEIGHT
+	print(fold_list)
+	fold_list[fold] += offset
+	fold_list[fold + 1] += offset
+	print(fold_list)
 
-func _on_some_fold_button_toggled(closed: bool, foldline_start: int, foldline_end: int):
+
+func _on_some_fold_button_toggled(closed: bool, fold: int):
+	var foldline_start = fold_list[fold]
+	var foldline_end = fold_list[fold + 1]
+	var fold_length = foldline_end - foldline_start
 	if closed:
 		fold_closed.emit(foldline_start, foldline_end)
 		print("fold %d closed" % foldline_start)
 	else:
 		fold_opened.emit(foldline_start, foldline_end)
 		print("fold %d opened" % foldline_start)
+	
+	# Offset every other fold by the length of this
+	for other_fold in range(fold + 2, fold_list.size() - 1, 2):
+		offset_fold(other_fold, fold_length * (-1 if closed else 1))
 																											   
