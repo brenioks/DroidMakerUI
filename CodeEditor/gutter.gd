@@ -27,6 +27,8 @@ func _on_code_node_set(new: Node):
 	
 	if not fold_list.is_empty():
 		_show_folds()
+	else:
+		_hide_folds()
 	
 	if not new:
 		new = get_node_or_null("../Code")
@@ -51,12 +53,16 @@ static func _update_gutters_width():
 		gutter.custom_minimum_size.x = Gutter.MIN_WIDTH
 
 func _show_folds():
+	folds_label.visible = true
 	for i in range(0, fold_list.size() - 1, 2):
 		var fold_start: int = fold_list[i]
 		var fold_end: int = fold_list[i + 1]
 		folds_label.text += "\n".repeat(fold_start - 1) + "⌄"
 		if fold_end > fold_start:
 			folds_label.text += "\n".repeat(fold_end - fold_start) + "."
+
+func _hide_folds():
+	folds_label.visible = false
 
 func _find_nth_occurrence(text: String, target: String, n: int) -> int:
 	var pos = -1
