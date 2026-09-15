@@ -73,10 +73,17 @@ func _detect_fold_regions(source: String):
 			print("didnt find a open bracket")
 			continue
 		
+		var skip_closing_counter = 0
 		for j in range(i, splitted_source.size()):
 			var closing_line = splitted_source[j]
+			if closing_line.contains("{"):
+				skip_closing_counter += 1
 			if not closing_line.contains("}"):
 				print("didnt find a closing bracket for this opening one")
+				continue
+			
+			if skip_closing_counter > 1:
+				skip_closing_counter -= 1
 				continue
 			var openbracket_line = i
 			var closebracket_line = j
