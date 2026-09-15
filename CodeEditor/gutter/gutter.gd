@@ -2,8 +2,8 @@
 class_name Gutter
 extends PanelContainer
 
-signal fold_opened(fold_start: int, fold_end: int)
-signal fold_closed(fold_start: int, fold_end: int)
+signal fold_opened(foldline_start: int, foldline_end: int)
+signal fold_closed(foldline_start: int, foldline_end: int)
 
 @warning_ignore("unused_private_class_variable")
 @export_tool_button("Sync Gutter Sizes") var __sync_gutter_sizes = func():
@@ -19,7 +19,7 @@ signal fold_closed(fold_start: int, fold_end: int)
 static var MIN_WIDTH: int = 0
 static var _instance_list: Array[Gutter]
 
-const fold_button = preload("res://CodeEditor/gutter/fold_button.tscn")
+const foldline_button = preload("res://CodeEditor/gutter/fold_button.tscn")
 
 
 func _ready() -> void:
@@ -52,6 +52,8 @@ func _on_code_node_set(new: Node):
 	Gutter.MIN_WIDTH = max(Gutter.MIN_WIDTH, size.x)
 	print("(%s) GUTTER_WIDTH: %s" % [$"..".name, Gutter.MIN_WIDTH])
 	Gutter._update_gutters_width()
+	
+	new.gutter = self
 
 static func _update_gutters_width():
 	for gutter in Gutter._instance_list:
@@ -60,40 +62,32 @@ static func _update_gutters_width():
 func _show_folds():
 	fold_button_list.visible = true
 	for i in range(0, fold_list.size() - 1, 2):
-		var fold_start: int = fold_list[i]
-		var fold_end: int = fold_list[i + 1]
+		var foldline_start: int = fold_list[i]
+		var foldline_end: int = fold_list[i + 1]
 		
-		if fold_start > 1:
+		if foldline_start > 1:
 			var space = Control.new()
-			# After last fold_end
+			# After last foldline_end
 			if i > 1:
-				var last_fold_start: int = fold_list[i - 2]
-				space.custom_minimum_size.y = 17 * (fold_start - last_fold_start - 1)
+				var last_foldline_start: int = fold_list[i - 2]
+				space.custom_minimum_size.y = 17 * (foldline_start - last_foldline_start - 1)
 			else:
-				space.custom_minimum_size.y = 17 * (fold_start - 1)
+				space.custom_minimum_size.y = 17 * (foldline_start - 1)
 			fold_button_list.add_child(space)
 		
-		var fold_button_inst: Button = fold_button.instantiate()
-		fold_button_inst.toggled.connect(_on_some_fold_button_toggled.bind(fold_start, fold_end))
-		fold_button_list.add_child(fold_button_inst)
+		var foldline_button_inst: Button = foldline_button.instantiate()
+		foldline_button_inst.toggled.connect(_on_some_fold_button_toggled.bind(foldline_start, foldline_end))
+		fold_button_list.add_child(foldline_button_inst)
 
 func _hide_folds():
 	fold_button_list.visible = false
 
-func _find_nth_occurrence(text: String, target: String, n: int) -> int:
-	var pos = -1
-	for i in range(n):
-		pos = text.find(target, pos + 1)
-		if pos == -1:
-			break
-	return pos
 
-
-func _on_some_fold_button_toggled(closed: bool, fold_start: int, fold_end: int):
+func _on_some_fold_button_toggled(closed: bool, foldline_start: int, foldline_end: int):
 	if closed:
-		fold_closed.emit(fold_start, fold_end)
-		print("fold %d closed" % fold_start)
+		fold_closed.emit(foldline_start, foldline_end)
+		print("fold %d closed" % foldline_start)
 	else:
-		fold_opened.emit(fold_start, fold_end)
-		print("fold %d opened" % fold_start)
+		fold_opened.emit(foldline_start, foldline_end)
+		print("fold %d opened" % foldline_start)
 																											   

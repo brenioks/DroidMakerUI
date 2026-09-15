@@ -89,7 +89,7 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="Gutter" parent="Main/Column/EventList/HBoxContainer" unique_id=561590972 instance=ExtResource("4_gwg38")]
-custom_minimum_size = Vector2(16, 0)
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 fold_list = PackedInt32Array(0, 0)
 
@@ -104,8 +104,9 @@ size_flags_vertical = 3
 theme_override_constants/separation = 8
 
 [node name="Gutter" parent="Main/Column/EventList/CodeGroup" unique_id=650094435 instance=ExtResource("4_gwg38")]
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
-fold_list = PackedInt32Array(8, 10)
+fold_list = PackedInt32Array(8, 10, 12, 19)
 
 [node name="Code" type="RichTextLabel" parent="Main/Column/EventList/CodeGroup" unique_id=503353715]
 layout_mode = 2
@@ -140,6 +141,7 @@ script = ExtResource("5_kjeef")
 layout_mode = 2
 
 [node name="RestOfTheWorldGutter" parent="Main/Column/EventList" unique_id=1472342649 instance=ExtResource("4_gwg38")]
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 3
