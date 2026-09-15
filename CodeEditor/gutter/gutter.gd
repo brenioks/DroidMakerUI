@@ -102,9 +102,9 @@ func _show_folds():
 			# After last foldline_end
 			if fold > 1:
 				var last_foldline_start: int = fold_list[fold - 2]
-				space.custom_minimum_size.y = FONT_HEIGHT * (foldline_start - last_foldline_start - 1)
+				space.custom_minimum_size.y = FONT_HEIGHT * (foldline_start - last_foldline_start - 1) - 1
 			else:
-				space.custom_minimum_size.y = FONT_HEIGHT * (foldline_start - 1)
+				space.custom_minimum_size.y = FONT_HEIGHT * (foldline_start - 1) - 1
 			fold_button_list.add_child(space)
 		
 		var fold_button_inst: Button = foldline_button.instantiate()
@@ -116,10 +116,10 @@ func _hide_folds():
 	fold_button_list.visible = false
 
 func offset_fold(fold: int, offset: int):
-	if fold == 0 or fold > line_count:
+	if offset == 0 or fold == 0 or fold > line_count:
 		return
 	var foldline = fold_list[fold]
-	var fold_button = fold_button_list.get_node_or_null("Fold%d" % fold)
+	var fold_button: Button = fold_button_list.get_node_or_null("Fold%d" % fold)
 	if not fold_button:
 		printerr("cant offset Fold%d (l %d), button not found" % [fold, foldline])
 		return
@@ -127,7 +127,6 @@ func offset_fold(fold: int, offset: int):
 	if not spacer_before:
 		printerr("cant offset Fold%d (l %d), because there's no spacer before it" % [fold, foldline])
 		return
-	
 	spacer_before.custom_minimum_size.y += offset * FONT_HEIGHT
 	fold_list[fold] += offset
 	fold_list[fold + 1] += offset
@@ -144,7 +143,7 @@ func _on_some_fold_button_toggled(closed: bool, fold: int):
 		fold_opened.emit(foldline_start, foldline_end)
 		print("fold %d opened" % foldline_start)
 	
-	# Offset every other fold by the length of this
-	for other_fold in range(fold + 2, fold_list.size() - 1, 2):
-		offset_fold(other_fold, fold_length * (-1 if closed else 1))
+	var next_fold = fold + 2
+	if next_fold < fold_list.size():
+		offset_fold(next_fold, fold_length * (-1 if closed else 1))
 																											   
