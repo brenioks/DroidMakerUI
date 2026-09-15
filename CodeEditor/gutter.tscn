@@ -3,20 +3,30 @@
 [ext_resource type="Script" uid="uid://hn87vvwjriq8" path="res://CodeEditor/gutter.gd" id="1_klnqo"]
 [ext_resource type="StyleBox" uid="uid://d4bl24jyp3x3h" path="res://CodeEditor/gutter_panel.tres" id="1_tuqt5"]
 [ext_resource type="Theme" uid="uid://x7gpo1v81u7s" path="res://CodeEditor/code_theme.tres" id="2_tuqt5"]
+[ext_resource type="Texture2D" uid="uid://ciy00po43v22j" path="res://icons/dropdown_icon.png" id="4_t7r24"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nejmh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cx4q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t7r24"]
 
 [node name="Gutter" type="PanelContainer" unique_id=561590972]
 theme_override_styles/panel = ExtResource("1_tuqt5")
 script = ExtResource("1_klnqo")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=88407503]
+modulate = Color(0.81960785, 0.9372549, 1, 0.5411765)
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="Numbers" type="RichTextLabel" parent="HBoxContainer" unique_id=566654518]
 unique_name_in_owner = true
-modulate = Color(0.82, 0.93700004, 1, 0.5411765)
 layout_mode = 2
 size_flags_vertical = 0
 theme = ExtResource("2_tuqt5")
+text = "1
+2"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
@@ -24,6 +34,7 @@ horizontal_alignment = 2
 
 [node name="Folds" type="RichTextLabel" parent="HBoxContainer" unique_id=793374323]
 unique_name_in_owner = true
+visible = false
 modulate = Color(0.82, 0.93700004, 1, 0.5411765)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -33,3 +44,16 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 horizontal_alignment = 2
+
+[node name="FoldButtonList" type="VBoxContainer" parent="HBoxContainer" unique_id=1250871364]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 1
+
+[node name="FoldButton" type="Button" parent="HBoxContainer/FoldButtonList" unique_id=1457573624]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_nejmh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_5cx4q")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_t7r24")
+icon = ExtResource("4_t7r24")
+flat = true
