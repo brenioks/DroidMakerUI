@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dl7e7oq7fj43g" path="res://icons/assets_icon.png" id="2_2a0aw"]
 [ext_resource type="Texture2D" uid="uid://6xcht2b0cedh" path="res://icons/icon.svg" id="2_xlm1k"]
 [ext_resource type="Theme" uid="uid://x7gpo1v81u7s" path="res://CodeEditor/code_theme.tres" id="4_aqlwe"]
-[ext_resource type="PackedScene" uid="uid://lh34yjsrk50e" path="res://CodeEditor/gutter.tscn" id="4_gwg38"]
+[ext_resource type="PackedScene" uid="uid://lh34yjsrk50e" path="res://CodeEditor/gutter/gutter.tscn" id="4_gwg38"]
 [ext_resource type="Script" uid="uid://bqnnt6re1844n" path="res://CodeEditor/code_editor.gd" id="5_kjeef"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kjeef"]

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://lh34yjsrk50e"]
 
-[ext_resource type="Script" uid="uid://hn87vvwjriq8" path="res://CodeEditor/gutter.gd" id="1_klnqo"]
-[ext_resource type="StyleBox" uid="uid://d4bl24jyp3x3h" path="res://CodeEditor/gutter_panel.tres" id="1_tuqt5"]
+[ext_resource type="Script" uid="uid://hn87vvwjriq8" path="res://CodeEditor/gutter/gutter.gd" id="1_klnqo"]
+[ext_resource type="StyleBox" uid="uid://d4bl24jyp3x3h" path="res://CodeEditor/gutter/gutter_panel.tres" id="1_tuqt5"]
 [ext_resource type="Theme" uid="uid://x7gpo1v81u7s" path="res://CodeEditor/code_theme.tres" id="2_tuqt5"]
 
 [node name="Gutter" type="PanelContainer" unique_id=561590972]
