@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://brsi0a01t7slc"]
 
 [ext_resource type="Texture2D" uid="uid://ciy00po43v22j" path="res://icons/dropdown_icon.png" id="1_yyorp"]
+[ext_resource type="Script" uid="uid://f4ejjrm1nnw0" path="res://CodeEditor/gutter/fold_button.gd" id="2_ss3fk"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nejmh"]
 
@@ -12,5 +13,10 @@
 theme_override_styles/normal = SubResource("StyleBoxEmpty_nejmh")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_5cx4q")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_t7r24")
+toggle_mode = true
 icon = ExtResource("1_yyorp")
 flat = true
+icon_alignment = 1
+script = ExtResource("2_ss3fk")
+
+[connection signal="toggled" from="." to="." method="_on_toggled"]

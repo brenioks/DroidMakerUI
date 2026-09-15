@@ -16,7 +16,7 @@ extends PanelContainer
 static var MIN_WIDTH: int = 0
 static var _instance_list: Array[Gutter]
 
-var fold_button = preload("res://CodeEditor/fold_button.tscn")
+const fold_button = preload("res://CodeEditor/gutter/fold_button.tscn")
 
 
 func _ready() -> void:
