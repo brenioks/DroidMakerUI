@@ -2,6 +2,9 @@
 class_name Gutter
 extends PanelContainer
 
+signal fold_opened(fold_start: int, fold_end: int)
+signal fold_closed(fold_start: int, fold_end: int)
+
 @warning_ignore("unused_private_class_variable")
 @export_tool_button("Sync Gutter Sizes") var __sync_gutter_sizes = func():
 	_on_code_node_set(code_node)
@@ -58,7 +61,7 @@ func _show_folds():
 	fold_button_list.visible = true
 	for i in range(0, fold_list.size() - 1, 2):
 		var fold_start: int = fold_list[i]
-		#var fold_end: int = fold_list[i + 1]
+		var fold_end: int = fold_list[i + 1]
 		
 		if fold_start > 1:
 			var space = Control.new()
@@ -70,7 +73,8 @@ func _show_folds():
 				space.custom_minimum_size.y = 17 * (fold_start - 1)
 			fold_button_list.add_child(space)
 		
-		var fold_button_inst = fold_button.instantiate()
+		var fold_button_inst: Button = fold_button.instantiate()
+		fold_button_inst.toggled.connect(_on_some_fold_button_toggled.bind(fold_start, fold_end))
 		fold_button_list.add_child(fold_button_inst)
 
 func _hide_folds():
@@ -83,4 +87,13 @@ func _find_nth_occurrence(text: String, target: String, n: int) -> int:
 		if pos == -1:
 			break
 	return pos
+
+
+func _on_some_fold_button_toggled(closed: bool, fold_start: int, fold_end: int):
+	if closed:
+		fold_closed.emit(fold_start, fold_end)
+		print("fold %d closed" % fold_start)
+	else:
+		fold_opened.emit(fold_start, fold_end)
+		print("fold %d opened" % fold_start)
 																											   
