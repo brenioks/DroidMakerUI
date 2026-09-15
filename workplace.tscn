@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://bqnnt6re1844n" path="res://CodeEditor/code_editor.gd" id="5_kjeef"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kjeef"]
-bg_color = Color(0.1547, 0.17, 0.16949, 1)
+bg_color = Color(0.07338997, 0.08318748, 0.083187945, 1)
 
 [node name="Control" type="Control" unique_id=1999838038]
 layout_mode = 3

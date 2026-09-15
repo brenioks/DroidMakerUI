@@ -10,7 +10,7 @@ corner_radius_bottom_left = 100
 [sub_resource type="SystemFont" id="SystemFont_kvery"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqlwe"]
-bg_color = Color(0.646, 0.72389996, 0.76, 0.101960786)
+bg_color = Color(0.58519995, 0.71921337, 0.76, 0.21176471)
 
 [resource]
 Button/styles/normal = SubResource("StyleBoxFlat_g7b7a")
