@@ -11,10 +11,12 @@ extends PanelContainer
 @export var fold_list: PackedInt32Array
 
 @onready var numbers_label = %Numbers
-@onready var folds_label = %Folds
+@onready var fold_button_list = %FoldButtonList
 
 static var MIN_WIDTH: int = 0
 static var _instance_list: Array[Gutter]
+
+var fold_button = preload("res://CodeEditor/fold_button.tscn")
 
 
 func _ready() -> void:
@@ -53,21 +55,26 @@ static func _update_gutters_width():
 		gutter.custom_minimum_size.x = Gutter.MIN_WIDTH
 
 func _show_folds():
-	folds_label.visible = true
+	fold_button_list.visible = true
 	for i in range(0, fold_list.size() - 1, 2):
 		var fold_start: int = fold_list[i]
-		var fold_end: int = fold_list[i + 1]
-		var newlines: String = ""
+		#var fold_end: int = fold_list[i + 1]
 		
 		if fold_start > 1:
-			newlines = "\n".repeat(fold_start - 1)
-		folds_label.text += newlines + "⌄"
+			var space = Control.new()
+			# After last fold_end
+			if i > 1:
+				var last_fold_start: int = fold_list[i - 2]
+				space.custom_minimum_size.y = 17 * (fold_start - last_fold_start - 1)
+			else:
+				space.custom_minimum_size.y = 17 * (fold_start - 1)
+			fold_button_list.add_child(space)
 		
-		if fold_end > fold_start:
-			folds_label.text += "\n".repeat(fold_end - fold_start) + "."
+		var fold_button_inst = fold_button.instantiate()
+		fold_button_list.add_child(fold_button_inst)
 
 func _hide_folds():
-	folds_label.visible = false
+	fold_button_list.visible = false
 
 func _find_nth_occurrence(text: String, target: String, n: int) -> int:
 	var pos = -1
