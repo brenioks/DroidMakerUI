@@ -57,7 +57,12 @@ func _show_folds():
 	for i in range(0, fold_list.size() - 1, 2):
 		var fold_start: int = fold_list[i]
 		var fold_end: int = fold_list[i + 1]
-		folds_label.text += "\n".repeat(fold_start - 1) + "⌄"
+		var newlines: String = ""
+		
+		if fold_start > 1:
+			newlines = "\n".repeat(fold_start - 1)
+		folds_label.text += newlines + "⌄"
+		
 		if fold_end > fold_start:
 			folds_label.text += "\n".repeat(fold_end - fold_start) + "."
 
